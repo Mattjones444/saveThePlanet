@@ -17,10 +17,7 @@ public class StartSquare extends Square {
     
     @Override
     public void landOn(Player player, Scanner scanner) {
-        System.out.println("You landed on " + getName() + ".");
-        System.out.println("You gained " + reward + " eco points.");
-        player.addResources(reward);
-        System.out.println("New balance: " + player.getResources());
+    	 System.out.println("You are at Eco Hub.");
     }
 
 }

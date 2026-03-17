@@ -16,7 +16,6 @@ public class Game {
         dice = new Dice();
     }
 
-    // Displays the name of the game at the beginning
     public void displayName() {
         System.out.println("====================================================");
         System.out.println("        🌍  WELCOME TO SAVE THE PLANET 🌱");
@@ -29,7 +28,6 @@ public class Game {
         System.out.println("====================================================");
     }
 	
-    // Setup the number of players and names of players
     public void setupPlayers() {
 
         System.out.print("Enter number of players (2-4): ");
@@ -61,12 +59,14 @@ public class Game {
             players.add(player);
 
             System.out.println(name + " registered as Player " + (i + 1));
+            System.out.println("Starting resources: " + player.getResources());
             System.out.println();
         }
     }
 
     public void takeTurn(Player player, Board board) {
         System.out.println("\n" + player.getName() + ", it's your turn.");
+        System.out.println("Current resources: " + player.getResources());
         System.out.print("Press Enter to roll the dice...");
         scanner.nextLine();
 
@@ -76,11 +76,20 @@ public class Game {
 
         System.out.println("You rolled " + roll1 + " and " + roll2 + " (Total: " + total + ")");
 
-        int newPosition = (player.getPosition() + total) % board.getBoardSize();
+        int oldPosition = player.getPosition();
+        int newPosition = (oldPosition + total) % board.getBoardSize();
+
+        if (newPosition < oldPosition) {
+            System.out.println("You passed Eco Hub! You gain 50 resources.");
+            player.addResources(50);
+            System.out.println("New balance: " + player.getResources());
+        }
+
         player.setPosition(newPosition);
 
         Square square = board.getSquare(newPosition);
         System.out.println("You landed on: " + square.getName());
+
         square.landOn(player, scanner);
     }
 
@@ -96,8 +105,9 @@ public class Game {
         	takeTurn(player,board);
         	
         	if(player.isOutOfResources()) {
-        		gameOver=true;
-        		break;
+        	    System.out.println(player.getName() + " has run out of resources!");
+        	    gameOver = true;
+        	    break;
         	}
         }
    

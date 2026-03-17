@@ -57,20 +57,25 @@ public class Area extends Square {
     }
 
     public int calculateUsageCost() {
-        return baseUsageCost * (developmentLevel + 1);
+        return baseUsageCost * (developmentLevel + 1)*2;
     }
 
     public void offerDevelopment(Player player, Scanner scanner) {
         if (developmentLevel < 3) {
             System.out.println("This area is currently at development level " + developmentLevel + ".");
+            System.out.println("Development cost: " + developmentCost);
+            System.out.println("Current usage cost: " + calculateUsageCost());
             System.out.print("Would you like to develop it to level " + (developmentLevel + 1) + "? (Y/N): ");
+
             String choice = scanner.nextLine();
 
             if (choice.equalsIgnoreCase("Y")) {
                 if (player.getResources() >= developmentCost) {
                     player.deductResources(developmentCost);
                     developmentLevel++;
+
                     System.out.println(getName() + " has been developed to level " + developmentLevel + ".");
+                    System.out.println("New usage cost: " + calculateUsageCost());
                     System.out.println("Remaining resources: " + player.getResources());
                 } else {
                     System.out.println("You do not have enough resources to develop this area.");
