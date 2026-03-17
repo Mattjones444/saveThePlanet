@@ -28,7 +28,7 @@ public class Game {
         System.out.println("             Every action matters.");
         System.out.println("====================================================");
     }
-    
+	
     // Setup the number of players and names of players
     public void setupPlayers() {
 
@@ -64,6 +64,45 @@ public class Game {
             System.out.println();
         }
     }
-	
 
+    public void takeTurn(Player player, Board board) {
+        System.out.println("\n" + player.getName() + ", it's your turn.");
+        System.out.print("Press Enter to roll the dice...");
+        scanner.nextLine();
+
+        int roll1 = dice.roll();
+        int roll2 = dice.roll();
+        int total = roll1 + roll2;
+
+        System.out.println("You rolled " + roll1 + " and " + roll2 + " (Total: " + total + ")");
+
+        int newPosition = (player.getPosition() + total) % board.getBoardSize();
+        player.setPosition(newPosition);
+
+        Square square = board.getSquare(newPosition);
+        System.out.println("You landed on: " + square.getName());
+        square.landOn(player, scanner);
     }
+
+    public void startGame() {
+    	boolean gameOver=false;
+        displayName();
+        setupPlayers();
+
+        Board board = new Board();
+         
+    while(!gameOver) {
+    	for(Player player:players) {
+        	takeTurn(player,board);
+        	
+        	if(player.isOutOfResources()) {
+        		gameOver=true;
+        		break;
+        	}
+        }
+   
+    }
+        
+       
+    }
+}
