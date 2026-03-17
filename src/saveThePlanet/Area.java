@@ -60,6 +60,29 @@ public class Area extends Square {
         return baseUsageCost * (developmentLevel + 1);
     }
 
+    public void offerDevelopment(Player player, Scanner scanner) {
+        if (developmentLevel < 3) {
+            System.out.println("This area is currently at development level " + developmentLevel + ".");
+            System.out.print("Would you like to develop it to level " + (developmentLevel + 1) + "? (Y/N): ");
+            String choice = scanner.nextLine();
+
+            if (choice.equalsIgnoreCase("Y")) {
+                if (player.getResources() >= developmentCost) {
+                    player.deductResources(developmentCost);
+                    developmentLevel++;
+                    System.out.println(getName() + " has been developed to level " + developmentLevel + ".");
+                    System.out.println("Remaining resources: " + player.getResources());
+                } else {
+                    System.out.println("You do not have enough resources to develop this area.");
+                }
+            } else {
+                System.out.println("No development made.");
+            }
+        } else {
+            System.out.println("This area is already at the maximum development level.");
+        }
+    }
+
     @Override
     public void landOn(Player player, Scanner scanner) {
 
@@ -87,11 +110,13 @@ public class Area extends Square {
 
         } else if (owner == player) {
             System.out.println("You already own this area.");
+            offerDevelopment(player, scanner);
 
         } else {
             int cost = calculateUsageCost();
 
             System.out.println(getName() + " is owned by " + owner.getName() + ".");
+            System.out.println("Development level: " + developmentLevel);
             System.out.println("You must pay " + cost + " resources.");
 
             player.deductResources(cost);
