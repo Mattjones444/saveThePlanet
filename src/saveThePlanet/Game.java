@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Game {
 	
 	private static final int STARTING_RESOURCES = 100;
+	private static final int PASS_ECO_HUB_REWARD = 50;
 	
     private List<Player> players;
     private Scanner scanner;
@@ -82,8 +83,8 @@ public class Game {
         int newPosition = (oldPosition + total) % board.getBoardSize();
 
         if (newPosition < oldPosition) {
-            System.out.println("You passed Eco Hub! You gain 50 resources.");
-            player.addResources(50);
+            System.out.println("You passed Eco Hub! You gain " + PASS_ECO_HUB_REWARD + " resources.");
+            player.addResources(PASS_ECO_HUB_REWARD);
             player.displayBalance();
         }
 
@@ -93,6 +94,25 @@ public class Game {
         System.out.println("You landed on: " + square.getName());
 
         square.landOn(player, scanner);
+    }
+    
+    public void displayFinalBalances() {
+        System.out.println("\n===== FINAL BALANCES =====");
+        for (Player player : players) {
+            player.displayBalance();
+        }
+    }
+    
+    public void displayWinner() {
+        Player winner = players.get(0);
+
+        for (Player player : players) {
+            if (player.getResources() > winner.getResources()) {
+                winner = player;
+            }
+        }
+
+        System.out.println("\n🏆 Winner: " + winner.getName());
     }
 
     public void startGame() {
@@ -114,7 +134,9 @@ public class Game {
         }
    
     }
-        
+    displayFinalBalances();
+    displayWinner();
        
     }
+    
 }

@@ -46,6 +46,9 @@ public class Player {
 
     public void deductResources(int amount) {
         resources -= amount;
+        if (resources < 0) {
+            resources = 0;
+        }
     }
 
     public void addArea(Area area) {
