@@ -76,7 +76,8 @@ public class Area extends Square {
 
                     System.out.println(getName() + " has been developed to level " + developmentLevel + ".");
                     System.out.println("New usage cost: " + calculateUsageCost());
-                    System.out.println("Remaining resources: " + player.getResources());
+                    player.displayBalance();
+                    
                 } else {
                     System.out.println("You do not have enough resources to develop this area.");
                 }
@@ -105,7 +106,8 @@ public class Area extends Square {
                     player.addArea(this);
 
                     System.out.println(player.getName() + " now owns " + getName() + ".");
-                    System.out.println("Remaining resources: " + player.getResources());
+                    player.displayBalance();
+                  
                 } else {
                     System.out.println("You do not have enough resources to purchase this area.");
                 }
@@ -127,8 +129,9 @@ public class Area extends Square {
             player.deductResources(cost);
             owner.addResources(cost);
 
-            System.out.println(player.getName() + "'s remaining resources: " + player.getResources());
-            System.out.println(owner.getName() + "'s new resources: " + owner.getResources());
+            player.displayBalance();
+            owner.displayBalance();
+            
         }
     }
 }

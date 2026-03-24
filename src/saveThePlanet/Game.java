@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class Game {
 	
+	private static final int STARTING_RESOURCES = 100;
+	
     private List<Player> players;
     private Scanner scanner;
     private Dice dice;
@@ -55,7 +57,7 @@ public class Game {
 
             } while (duplicate);
 
-            Player player = new Player(name, 100);
+            Player player = new Player(name, STARTING_RESOURCES);
             players.add(player);
 
             System.out.println(name + " registered as Player " + (i + 1));
@@ -66,7 +68,7 @@ public class Game {
 
     public void takeTurn(Player player, Board board) {
         System.out.println("\n" + player.getName() + ", it's your turn.");
-        System.out.println("Current resources: " + player.getResources());
+        player.displayBalance();
         System.out.print("Press Enter to roll the dice...");
         scanner.nextLine();
 
@@ -82,7 +84,7 @@ public class Game {
         if (newPosition < oldPosition) {
             System.out.println("You passed Eco Hub! You gain 50 resources.");
             player.addResources(50);
-            System.out.println("New balance: " + player.getResources());
+            player.displayBalance();
         }
 
         player.setPosition(newPosition);

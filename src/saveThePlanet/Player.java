@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Player {
 	
-	private static final int STARTING_RESOURCES = 100;
+	
 	
 	private String name;
     private int resources;
@@ -61,6 +61,10 @@ public class Player {
         System.out.println("Resources: " + resources);
         System.out.println("Position: " + position);
         System.out.println("Owned areas: " + ownedAreas.size());
+    }
+    
+    public void displayBalance() {
+        System.out.println(name + "'s current resources: " + resources);
     }
 
 }
